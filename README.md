@@ -50,6 +50,6 @@ npm run main
 
 If you just want to see what the engine is capable of without running it locally, check out our pre-rendered test output:
 
-👉 [**View Rendered Output (HTML Preview)**](https://htmlpreview.github.io/?Fhttps://github.com/shonczinner/wordwriterid/blob/main/demo/test_output.html)
+👉 [**View Rendered Output (HTML Preview)**](https://htmlpreview.github.io/?https://github.com/shonczinner/wordwriterid/blob/main/demo/test_output.html)
 
 -----
