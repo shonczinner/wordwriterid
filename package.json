@@ -1,0 +1,19 @@
+{
+  "name": "wordwriterid",
+  "version": "1.0.0",
+  "description": "A technical writing library with automatic ID-based numbering.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "demo": "start http://localhost:8000/demo/demo.html && py -m http.server 8000",
+    "main": "node demo/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "katex": "^0.16.45",
+    "papaparse": "^5.5.3",
+    "prismjs": "^1.30.0"
+  }
+}

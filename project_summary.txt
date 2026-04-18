@@ -1,0 +1,155 @@
+WordWriterID Specification
+
+Everything is just referenced via [..id]
+
+1. Section Header
+
+    Input Syntax: #[..id] Title (where # count determines level h1-h3)
+
+    Output Syntax: <h1 id="header-id">1. Title</h1>
+
+    Logic: Increments the section counter if id present and accounts for nesting. References render as Section 1.1.
+
+    Notes: Can't have id if supersection is unreferenced. Will work if equal level section is unreferenced. 
+
+2. Math Equation
+
+    Input Syntax:
+
+        Referenced: $$[..id] \text{latex content} $$
+
+        Unreferenced: $$\text{latex content}$$
+
+    Output Syntax: * A centered KaTeX block.
+
+        If referenced, includes a right-aligned (1) and a "Copy KaTeX" button.
+
+    Logic: Increments equation counter only if id is present.
+
+3. CSV Table
+
+    Input Syntax: ```csv[..id] Table Title
+    Col1, Col2
+    Val1, Val2
+
+    Output Syntax: * A standard HTML <table> with a header Table 1: Table Title.
+
+        Includes a "Copy CSV" button that retrieves the raw block content as csv.
+
+    Logic: Increments table counter only if id is present
+
+4. Code Block / Algorithm
+
+    Input Syntax: ```code[..id] Algorithm Title
+    Code snippet
+
+    print("Hello World")
+
+    Output Syntax: * Prism.js/CodeMirror highlighted block.
+
+        Header: Algorithm 1: Algorithm Title.
+
+        "Copy Code" button.
+
+    Logic: Increments algorithm counter only if id is present. (Note: Language is flexible, e.g., code or js or python etc.).
+
+5. Figure / Image
+
+    Input Syntax: ![..id][Figure Description](url)
+
+    Output Syntax: * <img src="url">
+
+        Caption: Figure 1: Figure Description (placed below the image).
+
+    Logic: Increments figure counter only if id is present without id is [figure description]
+
+6. List Item (Referencable)
+
+    Input Syntax:
+
+        List Container: ordered[..id]Title or unordered[..id]Title
+
+        Items: * [..id] Item text
+
+    Output Syntax: * Standard <ul> or <ol>. Plus a header like List 1: Title or List 1 if no title. ol and ul share numbering.
+
+        References render as Item 1.1 (List Number.Item Number). 
+
+    Logic: Uses nested counting (e.g., List 1 → Item 1.1.1). Note that Item ids are optional but numbers count all with id or not.
+
+    Note: Dumb lists with no referencing allowed can use normal markdown 1. 1. 1. and * * * with spaces for indentation etc.
+
+7. Citation (Bibliography)
+
+    Input Syntax: @[..id](Author, "Title", Year)@
+
+    Output Syntax: * Inline: [1] (link to bibliography).
+
+        Footer: Entry in Bibliography section.
+
+    Logic: The first instance defines the metadata; subsequent uses of [..id] simply point back to the same number.
+
+8. Footnote
+
+    Input Syntax: ^[..id](Footnote text)^
+
+    Output Syntax: * Inline: ¹ (superscript link).
+
+        Footer: Entry in Footnotes section with a back-link ↩.
+
+    Logic: Similar to citations but uses a separate counter and superscript styling.
+
+9. Hyperlink (Standard)
+
+    Input Syntax: [Display Text](url)
+
+    Output Syntax: <a href="url">Display Text</a>
+
+    Logic: Standard unreferenced web link; ignored by internal ID registry.
+
+Project structure:
+
+demo
+demo\demo.css
+demo\demo.html
+demo\demo.js
+demo\main.js
+node_modules
+src
+src\index.js
+src\parser.js
+src\registry.js
+src\syntax.js
+package-lock.json
+package.json
+project_summary.txt
+TODO.txt
+
+Steps performed so far:
+
+1. Download nodejs
+2. npm install katex papaparse prismjs
+
+
+Done:
+Math equation reference
+CSV table reference
+Code block reference
+Figure reference
+Bibliography/footnote references
+Place all engine output in a div so styling is straightforward and fix katex/prism css dependancy
+Section/header references
+
+TODO:
+Go back to inline citation/footnote content and just end with )@ or )^
+Inline math (no referencing)
+Add no reference = no number
+Unreferenced hyperlinks (e.g. something like [Duck Duck Go](https://duckduckgo.com))
+Add referenced or unreferenced ordered/unordered lists/items
+Add shortcut for centering and having equal margins maybe [.c] content means center (think paper title) and ```a content``` is right justified at 50 characters per line (think paper abstract)
+Keep footnote numbering but make render before next header or before bibliography if none after
+Fail gracefully
+
+
+
+    

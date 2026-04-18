@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WordWriterID | Live Demo</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.45/dist/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+
+    <link rel="stylesheet" href="demo.css">
+    
+    <script type="importmap">
+    {
+      "imports": {
+        "katex": "https://cdn.jsdelivr.net/npm/katex@0.16.45/dist/katex.mjs",
+        "papaparse": "https://cdn.jsdelivr.net/npm/papaparse@5.5.3/+esm",
+        "prismjs": "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/+esm"
+      }
+    }
+    </script>
+
+    <script type="module" src="./demo.js"></script>
+</head>
+<body>
+
+<div id="editor-container">
+    <h2>Markdown Input</h2>
+    <textarea id="input" placeholder="Loading sample text..."></textarea>
+</div>
+
+<div id="preview-container">
+    <div class="paper" id="output"></div>
+</div>
+
+
+
+</body>
+</html>

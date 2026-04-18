@@ -1,0 +1,48 @@
+# WordWriterID Test Document
+
+See [..pythag] below.
+
+$$[..pythag] a^2 + b^2 = c^2 $$
+
+See [..line] below.
+
+$$[..line] y=mx+b $$
+
+```csv[..hw] Height Vs. Weight
+Name, Height, Weight 
+Alice, 5.5, 120 
+Bob, 6.0, 130
+```
+
+[..hw] is an interesting table!
+
+
+![..fig-test][A sample placeholder image](https://picsum.photos/600/300)
+
+
+Check out [..fig-test] for the results.
+
+As shown in [..sort-algo], we can implement a basic sorting logic.
+
+```python[..sort-algo] Bubble Sort Implementation
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr
+```
+
+This sentence requires further explanation[..extra-info]. 
+We can also add a second note here[..source-check] to see if the numbering continues correctly.
+
+[..extra-info](-f This is a detailed footnote explaining the technical nuances of the sentence above.)
+[..source-check](-f Verified against the 2024 internal documentation.)
+
+According to the research in [..relativity], time is relative. This concept was further explored in [..quantum-mechanics].
+
+[..relativity](-r Einstein, A. (1915). The General Theory of Relativity.)
+[..quantum-mechanics](-r Planck, M. (1900). On the Law of Distribution of Energy in the Normal Spectrum.)
+
+Check the bottom of the page for the full list!

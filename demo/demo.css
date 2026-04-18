@@ -1,0 +1,111 @@
+/* Layout & Structure */
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    margin: 0; 
+    display: flex; 
+    height: 100vh; 
+    overflow: hidden; 
+}
+
+#editor-container { 
+    width: 40%; 
+    background: #1e272e; 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    color: white;
+}
+
+textarea { 
+    flex-grow: 1; 
+    background: #2f3640; 
+    color: #f5f6fa; 
+    border: none; 
+    padding: 20px; 
+    font-family: 'Fira Code', monospace; 
+    font-size: 14px; 
+    resize: none;
+    outline: none; 
+    border-radius: 4px; 
+    line-height: 1.5;
+}
+
+#preview-container { 
+    width: 60%; 
+    background: #d1d8e0; 
+    padding: 40px; 
+    overflow-y: auto; 
+}
+
+.paper {
+    background: white; 
+    width: 100%; 
+    max-width: 850px;
+    padding: 60px 80px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    min-height: 100%; 
+    margin: 0 auto;
+    font-family: "Times New Roman", serif;
+    box-sizing: border-box;
+    color: #1a1a1a;
+}
+
+/* Typography */
+.paper h1 { font-size: 2em; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+.paper p { margin-bottom: 1.2em; text-align: justify; line-height: 1.6; }
+
+/* Blocks */
+.ww-math-block { 
+    display: flex; 
+    align-items: center; 
+    margin: 25px 0; 
+    background: #fdfdfd;
+}
+
+.ww-math-content { flex-grow: 1; text-align: center; }
+.ww-math-number { font-weight: bold; margin-left: 10px; color: #666; }
+
+.ww-table-container { margin: 20px 0; }
+.ww-table-caption { text-align: center; font-weight: bold; margin-bottom: 8px; font-family: sans-serif; }
+table.ww-table { width: 100%; border-collapse: collapse; }
+.ww-table th, .ww-table td { border: 1px solid #333; padding: 10px; text-align: left; }
+.ww-table th { background: #f8f9fa; }
+
+.ww-code-block { margin: 25px 0; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; }
+.ww-code-header { background: #f4f4f4; padding: 8px 15px; border-bottom: 1px solid #ddd; font-family: sans-serif; font-size: 0.9em; font-weight: bold; }
+.ww-code-block pre { margin: 0 !important; border-radius: 0 !important; }
+
+.ww-figure-container { text-align: center; margin: 30px 0; }
+.ww-figure-container img { max-width: 100%; height: auto; border: 1px solid #eee; }
+.ww-figure-caption { margin-top: 10px; font-style: italic; color: #555; font-size: 0.9em; }
+
+/* References & Footnotes */
+.ww-ref-link { 
+    color: #0066cc; 
+    text-decoration: none; 
+    font-weight: bold; 
+}
+
+/* THE FIX: Specifically targets the footnote class added by the parser */
+.ww-ref-footnote {
+    vertical-align: super;
+    font-size: 0.75em;
+    line-height: 0;
+    font-weight: normal;
+    margin-left: 1px;
+}
+
+.ww-ref-reference {
+    font-weight: normal;
+    color: #2c3e50;
+}
+
+.ww-end-section { 
+    margin-top: 50px; 
+    border-top: 2px solid #333; 
+    padding-top: 20px; 
+    font-family: sans-serif;
+}
+
+.ww-bib-list { list-style: none; padding: 0; font-size: 0.9em; }
+.ww-error { color: #e74c3c; font-weight: bold; }

@@ -1,0 +1,68 @@
+# Section with no ID
+
+Unnumbered equation:
+
+$$1+1=2$$ 
+
+#[..hi] asdh
+
+See [..pythag] below. asdasd           d
+
+Aha!
+
+$$[..pythag] a^2 + b^2 = c^2 $$
+
+See [..line] below.
+
+$$[..line] y=mx+b $$
+
+
+
+```csv[..hw] Height Vs. Weight
+Name, Height, Weight 
+Alice, 5.5, 120 
+Bob, 6.0, 130
+```
+##[..hi2] asdasd
+
+
+
+[..hw] is an interesting table!
+
+![..fig-test][A sample placeholder (image)](https://picsum.photos/600/300)
+
+Check out [..fig-test] for the results.
+
+As shown in [..sort-algo], we can implement a basic sorting logic.
+
+```python[..sort-algo] Bubble Sort Implementation
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr
+```
+
+This sentence requires further explanation[..extra-info].
+
+We can also add a second note here[..source-check] to see if the numbering continues correctly.
+
+^[..extra-info](more info)^
+
+^[..source-check](even more info)^
+
+#[..bye] Another Section
+
+By the way, see [..hi] or more specifically [..hi2] sada.
+
+
+According to the research in [..relativity], time is relative.
+
+@[..relativity](Einstein, A. (1915). The General Theory of Relativity.)@
+
+Check the bottom of the page for the full list!
+
+
+
