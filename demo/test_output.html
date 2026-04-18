@@ -123,6 +123,41 @@ table.ww-table { width: 100%; border-collapse: collapse; }
 .ww-bib-list { list-style: none; padding: 0; font-size: 0.9em; }
 .ww-error { color: #e74c3c; font-weight: bold; }
 
+/* Document Header */
+.ww-main-title { text-align: center; font-size: 3em; margin: 40px 0 10px 0; font-family: serif; }
+.ww-main-subtitle { text-align: center; font-size: 1.5em; color: #666; font-weight: 300; margin-bottom: 10px; }
+.ww-main-authors { text-align: center; font-size: 1.1em; margin-bottom: 40px; font-weight: 500; }
+
+/* Abstract Block */
+.ww-abstract-container {
+    margin: 0 auto 40px auto;
+    max-width: 85%;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 20px 0;
+}
+.ww-abstract-header { text-align: center; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
+.ww-abstract-content { text-align: justify; line-height: 1.6; font-size: 0.95em; }
+
+/* Blockquote */
+.ww-styled-blockquote {
+    border-left: 5px solid #eee;
+    padding-left: 20px;
+    margin: 20px 40px;
+    font-style: italic;
+    color: #444;
+}
+
+/* Keywords Pill Tags */
+.ww-keywords-row { margin-bottom: 30px; font-size: 0.9em; }
+.ww-tag {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 5px;
+    font-size: 0.85em;
+}
 
         /* Adjust the preview container for a single-page view */
         #preview-container {
@@ -134,22 +169,43 @@ table.ww-table { width: 100%; border-collapse: collapse; }
 <body>
     <div id="preview-container">
         <div class="paper">
-            <div class="wordwriter-container"><h1 id="section-anon">4 Section with no ID</h1>
+            <div class="wordwriter-container"><h1 class="ww-main-title">My Great Scientific Breakthrough</h1>
+<h2 class="ww-main-subtitle">Why RegEx is actually magic</h2>
+<div class="ww-main-authors">Jane Doe, John Smith</div>
+                <div class="ww-abstract-container">
+                    <div class="ww-abstract-header">Abstract</div>
+                    <div class="ww-abstract-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div></p>
+<div class="ww-keywords-row"><strong>Keywords:</strong> <span class="ww-tag">Science</span><span class="ww-tag">Logic</span><span class="ww-tag">Parsing</span></div>
+<blockquote class="ww-styled-blockquote">"To be or not to be" - Shakespeare</blockquote>
+<h1>Section with no ID</h1>
 <p>Unnumbered equation:</p>
-<div id="equation-anon" class="ww-math-block"><div class="ww-math-content"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+1=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></span></div><span class="ww-math-number">(4)</span></div> 
-<h1 id="section-hi">2 asdh</h1>
-<p>See <a href="#equation-pythag" class="ww-ref-link">Equation 2</a> below. asdasd &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; d</p>
+<div class="ww-math-block"><div class="ww-math-content"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+1=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></span></div></div> 
+<p>Unnumbered table:</p>
+<div class="ww-table-container"><div class="ww-table-caption"> Height Vs. Weight</div><table class="ww-table"><tbody><tr><th>Name</th><th> Height</th><th> Weight </th></tr><tr><td>Alice</td><td> 5.5</td><td> 120 </td></tr><tr><td>Bob</td><td> 6.0</td><td> 130</td></tr></tbody></table></div>
+<p>Unnumbered figure:</p>
+<div class="ww-figure-container"><img src="https://picsum.photos/600/300"><div class="ww-figure-caption">A sample placeholder (image)</div></div>
+<p>Unnumbered codeblock:</p>
+<div class="ww-code-block"><div class="ww-code-header"> Bubble Sort Implementation</div><pre class="language-python"><code>def <span class="token function">bubble_sort</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token operator">:</span>
+<p> &nbsp; &nbsp;n <span class="token operator">=</span> <span class="token function">len</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span></p>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token function">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token operator">:</span>
+        <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token function">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> n<span class="token operator">-</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">:</span>
+            <span class="token keyword">if</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> arr<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">:</span>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span></p>
+    <span class="token keyword">return</span> arr</code></pre></div>
+<h1 id="section-hi">1 asdh</h1>
+<p>See <a href="#equation-pythag" class="ww-ref-link">Equation 1</a> below. asdasd &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; d</p>
 <p>Aha!</p>
-<div id="equation-pythag" class="ww-math-block"><div class="ww-math-content"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">a^2 + b^2 = c^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9474em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8641em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8641em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></div><span class="ww-math-number">(2)</span></div>
-<p>See <a href="#equation-line" class="ww-ref-link">Equation 3</a> below.</p>
-<div id="equation-line" class="ww-math-block"><div class="ww-math-content"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>y</mi><mo>=</mo><mi>m</mi><mi>x</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">y=mx+b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></span></div><span class="ww-math-number">(3)</span></div>
+<div id="equation-pythag" class="ww-math-block"><div class="ww-math-content"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">a^2 + b^2 = c^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9474em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8641em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8641em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></div><span class="ww-math-number">(1)</span></div>
+<p>See <a href="#equation-line" class="ww-ref-link">Equation 2</a> below.</p>
+<div id="equation-line" class="ww-math-block"><div class="ww-math-content"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>y</mi><mo>=</mo><mi>m</mi><mi>x</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">y=mx+b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></span></div><span class="ww-math-number">(2)</span></div>
 <div id="table-hw" class="ww-table-container"><div class="ww-table-caption">Table 1:  Height Vs. Weight</div><table class="ww-table"><tbody><tr><th>Name</th><th> Height</th><th> Weight </th></tr><tr><td>Alice</td><td> 5.5</td><td> 120 </td></tr><tr><td>Bob</td><td> 6.0</td><td> 130</td></tr></tbody></table></div>
-<h2 id="section-hi2">2.1 asdasd</h2>
+<h2 id="section-hi2">1.1 asdasd</h2>
 <a href="#table-hw" class="ww-ref-link">Table 1</a> is an interesting table!
 <div id="figure-fig-test" class="ww-figure-container"><img src="https://picsum.photos/600/300"><div class="ww-figure-caption"><strong>Figure 1:</strong> A sample placeholder (image)</div></div>
 <p>Check out <a href="#figure-fig-test" class="ww-ref-link">Figure 1</a> for the results.</p>
-<p>As shown in <a href="#algorithm-sort-algo" class="ww-ref-link">Algorithm 2</a>, we can implement a basic sorting logic.</p>
-<div id="algorithm-sort-algo" class="ww-code-block"><div class="ww-code-header">Algorithm 2:  Bubble Sort Implementation</div><pre class="language-python"><code>def <span class="token function">bubble_sort</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token operator">:</span>
+<p>As shown in <a href="#algorithm-sort-algo" class="ww-ref-link">Algorithm 1</a>, we can implement a basic sorting logic.</p>
+<div id="algorithm-sort-algo" class="ww-code-block"><div class="ww-code-header">Algorithm 1:  Bubble Sort Implementation</div><pre class="language-python"><code>def <span class="token function">bubble_sort</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token operator">:</span>
 <p> &nbsp; &nbsp;n <span class="token operator">=</span> <span class="token function">len</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span></p>
     <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token function">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token operator">:</span>
         <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token function">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> n<span class="token operator">-</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">:</span>
@@ -158,8 +214,8 @@ table.ww-table { width: 100%; border-collapse: collapse; }
     <span class="token keyword">return</span> arr</code></pre></div>
 <p>This sentence requires further explanation<a id="fnref-extra-info" href="#footnote-extra-info" class="ww-ref-link"><sup>1</sup></a>.</p>
 <p>We can also add a second note here<a id="fnref-source-check" href="#footnote-source-check" class="ww-ref-link"><sup>2</sup></a> to see if the numbering continues correctly.</p>
-<h1 id="section-bye">3 Another Section</h1>
-<p>By the way, see <a href="#section-hi" class="ww-ref-link">Section 2</a> or more specifically <a href="#section-hi2" class="ww-ref-link">Section 2.1</a> sada.</p>
+<h1 id="section-bye">2 Another Section</h1>
+<p>By the way, see <a href="#section-hi" class="ww-ref-link">Section 1</a> or more specifically <a href="#section-hi2" class="ww-ref-link">Section 1.1</a> sada.</p>
 <p>According to the research in <a id="citeref-relativity" href="#citation-relativity" class="ww-ref-link">[1]</a>, time is relative. Did I mention <a href="#citation-relativity" class="ww-ref-link">[1]</a>?</p>
 <p>Check the bottom of the page for the full list!</p><section class="ww-end-matter"><h3>Footnotes</h3><ol><li id="footnote-extra-info">more info <a href="#fnref-extra-info" class="ww-backref">↩</a></li><li id="footnote-source-check">even more info <a href="#fnref-source-check" class="ww-backref">↩</a></li></ol></section><section class="ww-end-matter"><h3>Bibliography</h3><ul class="ww-bib-list"><li id="citation-relativity"><span class="ww-bib-num">[1]</span> Einstein, A. (1915). The General Theory of Relativity.</li></ul></section></div>
         </div>

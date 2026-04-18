@@ -23,12 +23,25 @@ export class WordWriterID {
         let out = text;
         const m = EngineSyntax.map;
 
+        // 1. Handle Unreferenced Metadata (Title, Subtitle, Authors, Abstract, Keywords, Blockquote)
+        const metaTypes = ['title', 'subtitle', 'authors', 'abstract', 'keywords', 'blockquote'];
+        metaTypes.forEach(type => {
+            if (m[type]) {
+                out = out.replace(m[type].regex, (match, ...args) => {
+                    const g = args.pop();
+                    return m[type].render(g);
+                });
+            }
+        });
+
+        // 2. Sections
         out = out.replace(m.section.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.registerSection(g.id, g.level, g.title);
             return m.section.render(g, entry);
         });
 
+        // 3. Equations
         out = out.replace(m.equation.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'equation', g);
@@ -36,6 +49,7 @@ export class WordWriterID {
             return m.equation.render(g, entry, math);
         });
 
+        // 4. Tables
         out = out.replace(m.table.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'table', g);
@@ -43,6 +57,7 @@ export class WordWriterID {
             return m.table.render(g, entry, this.generateTableHtml(csv));
         });
 
+        // 5. Algorithms
         out = out.replace(m.algorithm.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'algorithm', g);
@@ -50,18 +65,21 @@ export class WordWriterID {
             return m.algorithm.render(g, entry, code);
         });
 
+        // 6. Figures
         out = out.replace(m.figure.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'figure', g);
             return m.figure.render(g, entry);
         });
 
+        // 7. Citations
         out = out.replace(m.citation.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'citation', g);
             return m.citation.render(g, entry);
         });
 
+        // 8. Footnotes
         out = out.replace(m.footnote.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'footnote', g);
@@ -77,7 +95,8 @@ export class WordWriterID {
             .map(line => {
                 const trimmed = line.trim();
                 if (!trimmed) return '';
-                if (/^<(h\d|div|section|table|tbody|tr|th|td|pre|ol|ul|li|img|span|p|a)/i.test(trimmed)) return line;
+                // Updated check to include blockquote and div containers from metadata
+                if (/^<(h\d|div|section|table|tbody|tr|th|td|pre|ol|ul|li|img|span|p|a|blockquote)/i.test(trimmed)) return line;
                 return `<p>${line.replace(/  /g, ' &nbsp;')}</p>`;
             })
             .filter(l => l !== '')

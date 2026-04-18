@@ -1,6 +1,59 @@
+/**
+ * WordWriterID: Syntax Specification
+ * Updated with Academic Metadata Suite (Unreferenced)
+ */
 export const Specification = {
     utils: { reference: "[..ID]" },
     blocks: {
+        // --- UNREFERENCED METADATA BLOCKS ---
+        title: {
+            syntax: "Title: TITLE",
+            render: (g) => `<h1 class="ww-main-title">${g.title}</h1>`
+        },
+        subtitle: {
+            syntax: "Subtitle: TITLE",
+            render: (g) => `<h2 class="ww-main-subtitle">${g.title}</h2>`
+        },
+        authors: {
+            syntax: "Authors: TITLE",
+            render: (g) => `<div class="ww-main-authors">${g.title}</div>`
+        },
+        // --- Inside Specification.blocks ---
+        abstract: {
+            /* TRICK: We use the 'TITLE' placeholder here instead of 'CONTENT'.
+            Since 'TITLE' captures everything until the first newline [^\n]*,
+            it perfectly grabs a single-paragraph abstract without accidentally 
+            eating the rest of the document. 
+            */
+            syntax: "Abstract: TITLE", 
+            render: (g) => `
+                <div class="ww-abstract-container">
+                    <div class="ww-abstract-header">Abstract</div>
+                    <div class="ww-abstract-content">${g.title.trim()}</div>
+                </div>`
+        },
+
+        blockquote: {
+            /*
+            TRICK: Using 'TITLE' here as well allows for a single-line 
+            "Blockquote: My quote" syntax. If you need multi-line blockquotes,
+            you'd have to switch this back to 'CONTENT' and ensure a double-newline terminator.
+            */
+            syntax: "Blockquote: TITLE",
+            render: (g) => `<blockquote class="ww-styled-blockquote">${g.title.trim()}</blockquote>`
+        },
+        keywords: {
+            syntax: "Keywords: TITLE",
+            render: (g) => {
+                // Split by comma, trim whitespace, and wrap each in a span
+                const tags = g.title.split(',')
+                    .map(t => `<span class="ww-tag">${t.trim()}</span>`)
+                    .join(''); // Join with nothing, CSS will add the commas
+                return `<div class="ww-keywords-row"><strong>Keywords:</strong> ${tags}</div>`;
+            }
+        },
+
+        // --- REFERENCED BLOCKS (EXISTING) ---
         section: {
             syntax: "LEVEL[..ID] TITLE",
             ref: (num) => `Section ${num.join('.')}`,
@@ -73,7 +126,7 @@ class SyntaxFactory {
             .replace('LEVEL', '(?<level>#{1,3})')
             .replace('\\[\\.\\.ID\\]', '(?:\\[\\.\\.(?<id>[^\\s\\]]+)\\])?')
             .replace('\\(CONTENT\\)', '(?:\\((?<refContent>.*?)\\))?') 
-            .replace('CONTENT', '(?<content>.*?)') 
+            .replace('CONTENT', '(?<content>[\\s\\S]*?)') // Changed to support newlines
             .replace('TITLE', '(?<title>[^\\n]*)')
             .replace('LANG', '(?<lang>\\w+)')
             .replace('URL', '(?<url>.*?)')

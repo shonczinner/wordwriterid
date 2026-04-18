@@ -139,14 +139,17 @@ Figure reference
 Bibliography/footnote references
 Place all engine output in a div so styling is straightforward and fix katex/prism css dependancy
 Section/header references
+Unreferenced equations/sections/tables/code/figures which can't be referenced and don't update counters.
+paper title/substitle (i.e. centered bold, maybe ":title: CONTENT", ":subtitle: CONTENT") 
+abstract block (i.e. equal margins on both sides, maybe ```abstract ```)
 
 TODO:
-Go back to inline citation/footnote content and just end with )@ or )^
-Inline math (no referencing)
-Add no reference = no number
+Inline math (aka $math$ no referencing)
+Theorem, Lemma, Corrollary + Optional Proof (shared counter) ```theorem content ``` ```proof content```
 Unreferenced hyperlinks (e.g. something like [Duck Duck Go](https://duckduckgo.com))
-Add referenced or unreferenced ordered/unordered lists/items
-Add shortcut for centering and having equal margins maybe [.c] content means center (think paper title) and ```a content``` is right justified at 50 characters per line (think paper abstract)
+referenced or unreferenced ordered/unordered lists/items
+
+
 Keep footnote numbering but make render before next header or before bibliography if none after
 Fail gracefully
 
