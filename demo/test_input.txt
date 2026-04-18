@@ -4,6 +4,31 @@ Unnumbered equation:
 
 $$1+1=2$$ 
 
+Unnumbered table:
+```csv Height Vs. Weight
+Name, Height, Weight 
+Alice, 5.5, 120 
+Bob, 6.0, 130
+```
+
+Unnumbered figure:
+
+![A sample placeholder (image)](https://picsum.photos/600/300)
+
+Unnumbered codeblock:
+
+
+```python Bubble Sort Implementation
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr
+```
+
+
 #[..hi] asdh
 
 See [..pythag] below. asdasd           d
