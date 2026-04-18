@@ -45,22 +45,19 @@ def bubble_sort(arr):
     return arr
 ```
 
-This sentence requires further explanation[..extra-info].
+This sentence requires further explanation^[..extra-info](more info)^.
 
-We can also add a second note here[..source-check] to see if the numbering continues correctly.
+We can also add a second note here^[..source-check](even more info)^ to see if the numbering continues correctly.
 
-^[..extra-info](more info)^
-
-^[..source-check](even more info)^
 
 #[..bye] Another Section
 
 By the way, see [..hi] or more specifically [..hi2] sada.
 
 
-According to the research in [..relativity], time is relative.
+According to the research in @[..relativity](Einstein, A. (1915). The General Theory of Relativity.)@, time is relative. Did I mention [..relativity]?
 
-@[..relativity](Einstein, A. (1915). The General Theory of Relativity.)@
+
 
 Check the bottom of the page for the full list!
 

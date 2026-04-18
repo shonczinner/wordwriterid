@@ -1,10 +1,8 @@
 /**
- * WordWriterID: State & Cross-Reference Manager
- * * Maintains the `ids` Map and `counters` object to track the document's 
- * internal state. It uses `registerSection` for header nesting and 
- * `registerList`/`registerListItem` for list hierarchies. It ensures ID 
- * uniqueness by preventing double-counting on repeat citations and populates 
- * bibliography/footnote arrays for footer rendering.
+ * WordWriterIDRegistry
+ * * Acts as the central data store for the document.
+ * * Manages sequential numbering for all block types.
+ * * Stores metadata (citations/footnotes) for end-matter generation.
  */
 export class WordWriterIDRegistry {
     constructor() {
@@ -12,110 +10,92 @@ export class WordWriterIDRegistry {
         this.bibliography = [];
         this.footnotes = [];
         this.counters = {
-            equation: 0,
-            table: 0,
-            figure: 0,
+            equation: 0, 
+            table: 0, 
+            figure: 0, 
             algorithm: 0,
             citation: 0, 
-            footnote: 0,
-            list: 0 // Shared for ol and ul
+            footnote: 0, 
+            list: 0
         };
         this.sectionHierarchy = [0, 0, 0];
-        this.activeList = null; // Tracks current list for item nesting
     }
 
+    /**
+     * Clears all state for a fresh render pass.
+     */
     reset() {
         this.ids.clear();
         this.bibliography = [];
         this.footnotes = [];
         this.sectionHierarchy = [0, 0, 0];
-        this.activeList = null;
-        for (let key in this.counters) {
-            this.counters[key] = 0;
-        }
+        Object.keys(this.counters).forEach(k => this.counters[k] = 0);
     }
 
+    /**
+     * Handles hierarchical section numbering (e.g., 1.2.1).
+     */
     registerSection(id, level, title) {
-        if (!id) return null;
+        // level comes from regex as '#', '##', or '###'
         const index = level.length - 1; 
+        
+        // Increment current level
         this.sectionHierarchy[index]++;
+        
+        // Reset all sub-levels (e.g., moving from 1.2 to 2.0.0)
         for (let i = index + 1; i < this.sectionHierarchy.length; i++) {
             this.sectionHierarchy[i] = 0;
         }
+        
         const entry = {
-            id,
+            id, 
             type: 'section',
             numbers: this.sectionHierarchy.slice(0, index + 1),
             title: title
         };
-        this.ids.set(id, entry);
-        return entry;
-    }
-
-    /**
-     * registerList
-     * Sets the context for subsequent items.
-     */
-    registerList(id, type, title) {
-        this.counters.list++;
-        const entry = {
-            id,
-            type: 'list',
-            listType: type, // ordered or unordered
-            number: this.counters.list,
-            title: title,
-            itemCount: 0
-        };
         
-        if (id) this.ids.set(id, entry);
-        this.activeList = entry;
-        return entry;
-    }
-
-    /**
-     * registerListItem
-     * Uses activeList to generate numbers like 1.1
-     */
-    registerListItem(id, content) {
-        if (!this.activeList) return null;
-        
-        this.activeList.itemCount++;
-        const entry = {
-            id,
-            type: 'listItem',
-            numbers: [this.activeList.number, this.activeList.itemCount],
-            content: content
-        };
-
+        // Only map if an ID was provided; otherwise, it's just a numbered heading
         if (id) this.ids.set(id, entry);
         return entry;
     }
 
+    /**
+     * Registers a block (Equation, Table, Citation, etc.) and assigns a sequence number.
+     */
     register(id, type, metadata = {}) {
-        if (id && this.ids.has(id)) {
-            const existing = this.ids.get(id);
-            if (metadata.content && !existing.metadata.content) {
-                existing.metadata.content = metadata.content;
-            }
-            return existing;
-        }
-
-        if (!id) return null;
-
         const targetType = this.counters.hasOwnProperty(type) ? type : 'algorithm';
+        
+        // Always increment the counter for the type
         this.counters[targetType]++;
         
         const entry = {
             id,
             type: targetType,
             number: this.counters[targetType],
-            metadata: metadata || {}
+            metadata: { 
+                ...metadata, 
+                // Prioritize 'refContent' (from parentheses) over block 'content'
+                content: metadata.refContent || metadata.content 
+            }
         };
 
+        // If ID exists, handle potential duplicate declarations or updates
+        if (id) {
+            if (this.ids.has(id)) {
+                const existing = this.ids.get(id);
+                // If the new pass found content but the old one didn't, update it
+                if (entry.metadata.content && !existing.metadata.content) {
+                    existing.metadata.content = entry.metadata.content;
+                }
+                return existing;
+            }
+            this.ids.set(id, entry);
+        }
+
+        // Push citations and footnotes to their respective lists for the Bibliography/Footnotes section
         if (targetType === 'citation') this.bibliography.push(entry);
         if (targetType === 'footnote') this.footnotes.push(entry);
 
-        this.ids.set(id, entry);
         return entry;
     }
 }
