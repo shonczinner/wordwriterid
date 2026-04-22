@@ -10,6 +10,8 @@ Blockquote: "To be or not to be" - Shakespeare
 
 # Section with no ID
 
+[This is a link to google.com](google.com)
+
 Inline equation \(1+1=2\) and an unnumbered equation:
 
 $$1+1=2$$ 
