@@ -3,6 +3,17 @@
  */
 export const Specification = {
     utils: { reference: "[..ID]" },
+    inline: {
+        // [Link Text](URL)
+    hyperlink: {
+        syntax: "[TITLE](URL)",
+        render: (g) => {
+            // Simple check: if it doesn't start with http/https or a slash, add https://
+            const href = /^(http|https|#|\/)/.test(g.url) ? g.url : `https://${g.url}`;
+            return `<a href="${href}" class="ww-ext-link" target="_blank" rel="noopener">${g.title}</a>`;
+        }
+    }
+    },
     blocks: {
         // --- UNREFERENCED METADATA BLOCKS ---
         title: {
@@ -110,24 +121,51 @@ class SyntaxFactory {
         this.utils = {};
         this._build();
     }
-    _escape(str) { return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'); }
-    _generate(template) {
+
+    _escape(str) { 
+        return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'); 
+    }
+
+    _generate(template, isUtil = false) {
         let pattern = this._escape(template)
             .replace('LEVEL', '(?<level>#{1,3})')
-            .replace('\\[\\.\\.ID\\]', '(?:\\[\\.\\.(?<id>[^\\s\\]]+)\\])?')
+            // For blocks, ID is optional (?:...). For utils (references), it's usually mandatory.
+            .replace('\\[\\.\\.ID\\]', isUtil ? '\\[\\.\\.(?<id>[^\\s\\]]+)\\]' : '(?:\\[\\.\\.(?<id>[^\\s\\]]+)\\])?')
             .replace('\\(CONTENT\\)', '(?:\\((?<refContent>.*?)\\))?') 
             .replace('CONTENT', '(?<content>[\\s\\S]*?)')
             .replace('TITLE', '(?<title>[^\\n]*)')
             .replace('LANG', '(?<lang>\\w+)')
             .replace('URL', '(?<url>.*?)')
             .replace('\\n', '\\n');
-        return new RegExp(pattern, 'gs');
+
+        // Utils usually need to be found globally within strings, 
+        // while blocks use 'gs' for discovery.
+        return new RegExp(pattern, isUtil ? 'g' : 'gs');
     }
+
     _build() {
+        // 1. Build Blocks
         for (let key in this.spec.blocks) {
-            this.map[key] = { ...this.spec.blocks[key], regex: this._generate(this.spec.blocks[key].syntax) };
+            this.map[key] = { 
+                ...this.spec.blocks[key], 
+                regex: this._generate(this.spec.blocks[key].syntax) 
+            };
         }
-        this.utils.reference = /\[\.\.(?<id>[^\]\s:]+)\]/g;
+
+        // 2. Build Utils
+        for (let key in this.spec.utils) {
+            this.utils[key] = this._generate(this.spec.utils[key], true);
+        }
+
+        // 3. Build Inline Rules (Hyperlinks, etc.)
+        this.inline = {};
+        for (let key in this.spec.inline) {
+            this.inline[key] = {
+                ...this.spec.inline[key],
+                regex: this._generate(this.spec.inline[key].syntax)
+            };
+        }
     }
 }
+
 export const EngineSyntax = new SyntaxFactory(Specification);

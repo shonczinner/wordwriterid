@@ -146,11 +146,10 @@ Unreferenced equations/sections/tables/code/figures which can't be referenced an
 paper title/substitle (i.e. centered bold, maybe ":title: CONTENT", ":subtitle: CONTENT") 
 abstract block (i.e. equal margins on both sides)
 Inline math (aka $math$ no referencing)
+Unreferenced hyperlinks (e.g. something like [Duck Duck Go](https://duckduckgo.com))
 
 TODO:
-
 Theorem, Lemma, Corrollary + Optional Proof (shared counter) ```theorem content ``` ```proof content```
-Unreferenced hyperlinks (e.g. something like [Duck Duck Go](https://duckduckgo.com))
 referenced or unreferenced ordered/unordered lists/items
 Add button to copy latex, csv, and code 
 Add ability to run code

@@ -11,10 +11,23 @@ export class WordWriterID {
         this.parser = new WordWriterIDParser(this.registry);
     }
 
-    render(text) {
+render(text) {
         this.parser.discover(text);
         let html = this.renderVisualBlocks(text);
-        html = this.parser.transform(html);
+        
+        // 1. Handle Internal References ([..id])
+        html = this.parser.transform(html); 
+        
+        // 2. Handle Unreferenced Inline Styles (Hyperlinks)
+        const inline = EngineSyntax.inline;
+        Object.keys(inline).forEach(key => {
+            html = html.replace(inline[key].regex, (match, ...args) => {
+                const g = args.pop();
+                return inline[key].render(g);
+            });
+        });
+
+        // 3. Final cleanup and paragraph wrapping
         html = this.simpleMarkdown(html);
         return `<div class="wordwriter-container">${html}${this.generateEndMatter()}</div>`;
     }
