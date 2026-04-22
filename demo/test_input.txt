@@ -10,7 +10,7 @@ Blockquote: "To be or not to be" - Shakespeare
 
 # Section with no ID
 
-Unnumbered equation:
+Inline equation $1+1=2$ and an unnumbered equation:
 
 $$1+1=2$$ 
 
@@ -39,11 +39,10 @@ def bubble_sort(arr):
 ```
 
 
-#[..hi] asdh
+#[..hi] A title!
 
-See [..pythag] below. asdasd           d
+See [..pythag] below. Multiple   spaces!
 
-Aha!
 
 $$[..pythag] a^2 + b^2 = c^2 $$
 
@@ -87,7 +86,7 @@ We can also add a second note here^[..source-check](even more info)^ to see if t
 
 #[..bye] Another Section
 
-By the way, see [..hi] or more specifically [..hi2] sada.
+By the way, see [..hi] or more specifically [..hi2].
 
 
 According to the research in @[..relativity](Einstein, A. (1915). The General Theory of Relativity.)@, time is relative. Did I mention [..relativity]?

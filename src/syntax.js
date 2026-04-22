@@ -53,7 +53,6 @@ export const Specification = {
             }
         },
 
-        // --- REFERENCED BLOCKS (EXISTING) ---
         section: {
             syntax: "LEVEL[..ID] TITLE",
             ref: (num) => `Section ${num.join('.')}`,

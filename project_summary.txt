@@ -141,15 +141,15 @@ Place all engine output in a div so styling is straightforward and fix katex/pri
 Section/header references
 Unreferenced equations/sections/tables/code/figures which can't be referenced and don't update counters.
 paper title/substitle (i.e. centered bold, maybe ":title: CONTENT", ":subtitle: CONTENT") 
-abstract block (i.e. equal margins on both sides, maybe ```abstract ```)
+abstract block (i.e. equal margins on both sides)
 
 TODO:
 Inline math (aka $math$ no referencing)
 Theorem, Lemma, Corrollary + Optional Proof (shared counter) ```theorem content ``` ```proof content```
 Unreferenced hyperlinks (e.g. something like [Duck Duck Go](https://duckduckgo.com))
 referenced or unreferenced ordered/unordered lists/items
-
-
+Add button to copy latex, csv, and code 
+Add ability to run code
 Keep footnote numbering but make render before next header or before bibliography if none after
 Fail gracefully
 
