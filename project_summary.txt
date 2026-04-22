@@ -145,16 +145,17 @@ Section/header references
 Unreferenced equations/sections/tables/code/figures which can't be referenced and don't update counters.
 paper title/substitle (i.e. centered bold, maybe ":title: CONTENT", ":subtitle: CONTENT") 
 abstract block (i.e. equal margins on both sides)
-Inline math (aka $math$ no referencing)
+Inline math (aka \(math\) no referencing)
 Unreferenced hyperlinks (e.g. something like [Duck Duck Go](https://duckduckgo.com))
 
 TODO:
-Theorem, Lemma, Corrollary + Optional Proof (shared counter) ```theorem content ``` ```proof content```
+Make sure \begin{cases} works
+Theorem, Lemma, Corrollary + Optional Proof (shared counter) ```theorem title content ``` ```proof content``` etc.
 referenced or unreferenced ordered/unordered lists/items
 Add button to copy latex, csv, and code 
 Add ability to run code
 Keep footnote numbering but make render before next header or before bibliography if none after
-Fail gracefully
+Fail gracefully/test blocks/references inside other blocks/references
 
 
 

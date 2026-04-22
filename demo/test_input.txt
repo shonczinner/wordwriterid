@@ -14,7 +14,7 @@ Blockquote: "To be or not to be" - Shakespeare
 
 Inline equation \(1+1=2\) and an unnumbered equation:
 
-$$1+1=2$$ 
+\[1+1=2\] 
 
 Unnumbered table:
 ```csv Height Vs. Weight
@@ -46,11 +46,11 @@ def bubble_sort(arr):
 See [..pythag] below. Multiple   spaces!
 
 
-$$[..pythag] a^2 + b^2 = c^2 $$
+\[[..pythag] a^2 + b^2 = c^2\]
 
 See [..line] below.
 
-$$[..line] y=mx+b $$
+\[[..line] y=mx+b\]
 
 
 

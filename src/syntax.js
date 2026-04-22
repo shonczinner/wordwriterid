@@ -66,7 +66,7 @@ export const Specification = {
             }
         },
         equation: {
-            syntax: "$$[..ID]CONTENT$$",
+            syntax: "\\[[..ID]CONTENT\\]",
             ref: (num) => `Equation ${num}`,
             render: (g, e, math) => {
                 const idAttr = g.id ? ` id="equation-${g.id}"` : '';
