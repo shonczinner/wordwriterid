@@ -152,6 +152,8 @@ Make sure URLs with brackets in them don't get mangled. (optional <>)
 
 TODO:
 Theorem, Lemma, Corrollary + Optional Proof (shared counter) ```theorem title content ``` ```proof content``` etc.
+Click on preview to move input to location
+Fix block quotes to allow multiple paragraphs
 referenced or unreferenced ordered/unordered lists/items
 Add button to copy latex, csv, and code 
 Add ability to run code

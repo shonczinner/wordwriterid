@@ -42,8 +42,7 @@ export const Specification = {
             render: (g) => `
                 <div class="ww-abstract-container">
                     <div class="ww-abstract-header">Abstract</div>
-                    <div class="ww-abstract-content">${g.title.trim()}</div>
-                </div>`
+                    <div class="ww-abstract-content">${g.title.trim()}</div></div>`
         },
         blockquote: {
             syntax: "Blockquote: TITLE",
