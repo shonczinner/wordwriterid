@@ -10,7 +10,8 @@ Blockquote: "To be or not to be" - Shakespeare
 
 # Section with no ID
 
-[This is a link to google.com](google.com)
+Here we have a link to [google.com](google.com).
+Here we have a link to [https://en.wikipedia.org/wiki/Antenna_(radio)](<https://en.wikipedia.org/wiki/Antenna_(radio)>) which is a website about radio antennas and has brackets in the url.
 
 Inline equation \(1+1=2\) and an unnumbered equation:
 
@@ -41,6 +42,7 @@ def bubble_sort(arr):
 ```
 
 
+
 #[..hi] A title!
 
 See [..pythag] below. Multiple   spaces!
@@ -50,7 +52,11 @@ See [..pythag] below. Multiple   spaces!
 
 See [..line] below.
 
-\[[..line] y=mx+b\]
+\[[..line] 
+y=mx+b
+\]
+
+\[\begin{cases}=a&b\\b\end{cases}\]
 
 
 

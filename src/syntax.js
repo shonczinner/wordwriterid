@@ -5,14 +5,23 @@ export const Specification = {
     utils: { reference: "[..ID]" },
     inline: {
         // [Link Text](URL)
-    hyperlink: {
+        hyperlink: {
         syntax: "[TITLE](URL)",
         render: (g) => {
-            // Simple check: if it doesn't start with http/https or a slash, add https://
-            const href = /^(http|https|#|\/)/.test(g.url) ? g.url : `https://${g.url}`;
+            let url = g.url.trim();
+
+            // strip angle brackets if present
+            if (url.startsWith("<") && url.endsWith(">")) {
+            url = url.slice(1, -1);
+            }
+
+            const href = /^(http|https|#|\/)/.test(url)
+            ? url
+            : `https://${url}`;
+
             return `<a href="${href}" class="ww-ext-link" target="_blank" rel="noopener">${g.title}</a>`;
         }
-    }
+        }
     },
     blocks: {
         // --- UNREFERENCED METADATA BLOCKS ---
@@ -135,7 +144,7 @@ class SyntaxFactory {
             .replace('CONTENT', '(?<content>[\\s\\S]*?)')
             .replace('TITLE', '(?<title>[^\\n]*)')
             .replace('LANG', '(?<lang>\\w+)')
-            .replace('URL', '(?<url>.*?)')
+            .replace('URL', '(?<url><[^>]+>|[^\\s\\)]+)')
             .replace('\\n', '\\n');
 
         // Utils usually need to be found globally within strings, 
