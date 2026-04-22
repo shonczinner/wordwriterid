@@ -114,16 +114,19 @@ demo\demo.css
 demo\demo.html
 demo\demo.js
 demo\main.js
+demo\test_input.txt
+demo\test_output.html
 node_modules
 src
 src\index.js
 src\parser.js
 src\registry.js
 src\syntax.js
+.gitignore
 package-lock.json
 package.json
 project_summary.txt
-TODO.txt
+README.md
 
 Steps performed so far:
 
@@ -142,9 +145,10 @@ Section/header references
 Unreferenced equations/sections/tables/code/figures which can't be referenced and don't update counters.
 paper title/substitle (i.e. centered bold, maybe ":title: CONTENT", ":subtitle: CONTENT") 
 abstract block (i.e. equal margins on both sides)
+Inline math (aka $math$ no referencing)
 
 TODO:
-Inline math (aka $math$ no referencing)
+
 Theorem, Lemma, Corrollary + Optional Proof (shared counter) ```theorem content ``` ```proof content```
 Unreferenced hyperlinks (e.g. something like [Duck Duck Go](https://duckduckgo.com))
 referenced or unreferenced ordered/unordered lists/items

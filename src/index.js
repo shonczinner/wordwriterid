@@ -15,66 +15,8 @@ export class WordWriterID {
         this.parser.discover(text);
         let html = this.renderVisualBlocks(text);
         html = this.parser.transform(html);
-        html = this.parseInline(html); // ← NEW
         html = this.simpleMarkdown(html);
         return `<div class="wordwriter-container">${html}${this.generateEndMatter()}</div>`;
-    }
-
-    // ---------------- INLINE PARSING ----------------
-
-    parseInline(text) {
-        const blocks = [];
-
-        // Protect HTML tags (so we don't parse inside them)
-        text = text.replace(/<[^>]+>/g, (match) => {
-            const token = `__HTML_BLOCK_${blocks.length}__`;
-            blocks.push(match);
-            return token;
-        });
-
-        text = this.parseInlineMath(text);
-
-        // Restore HTML
-        return text.replace(/__HTML_BLOCK_(\d+)__/g, (_, i) => blocks[i]);
-    }
-
-    parseInlineMath(text) {
-        let result = '';
-        let buffer = '';
-        let inMath = false;
-
-        for (let i = 0; i < text.length; i++) {
-            const char = text[i];
-            const prev = text[i - 1];
-
-            if (char === '$' && prev !== '\\') {
-                if (inMath) {
-                    // CLOSE
-                    try {
-                        const rendered = katex.renderToString(buffer.trim(), {
-                            displayMode: false,
-                            throwOnError: false
-                        });
-                        result += `<span class="ww-inline-math">${rendered}</span>`;
-                    } catch {
-                        result += `$${buffer}$`; // fallback
-                    }
-                    buffer = '';
-                    inMath = false;
-                } else {
-                    // OPEN
-                    inMath = true;
-                }
-            } else {
-                if (inMath) buffer += char;
-                else result += char;
-            }
-        }
-
-        // Unclosed → treat literally
-        if (inMath) result += '$' + buffer;
-
-        return result;
     }
 
     // ---------------- BLOCK RENDERING ----------------
@@ -83,6 +25,7 @@ export class WordWriterID {
         let out = text;
         const m = EngineSyntax.map;
 
+        // 1. Academic Metadata & Formatting
         const metaTypes = ['title', 'subtitle', 'authors', 'abstract', 'keywords', 'blockquote'];
         metaTypes.forEach(type => {
             if (m[type]) {
@@ -93,12 +36,24 @@ export class WordWriterID {
             }
         });
 
+        // 2. Inline Math \( ... \) 
+        // Treated as a block for discovery/logic but rendered inline
+        if (m.inlineMath) {
+            out = out.replace(m.inlineMath.regex, (match, ...args) => {
+                const g = args.pop();
+                const math = katex.renderToString(g.content.trim(), { displayMode: false, throwOnError: false });
+                return m.inlineMath.render(g, {}, math);
+            });
+        }
+
+        // 3. Sections
         out = out.replace(m.section.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.registerSection(g.id, g.level, g.title);
             return m.section.render(g, entry);
         });
 
+        // 4. Equations $$ ... $$
         out = out.replace(m.equation.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'equation', g);
@@ -106,6 +61,7 @@ export class WordWriterID {
             return m.equation.render(g, entry, math);
         });
 
+        // 5. Tables
         out = out.replace(m.table.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'table', g);
@@ -113,6 +69,7 @@ export class WordWriterID {
             return m.table.render(g, entry, this.generateTableHtml(csv));
         });
 
+        // 6. Algorithms
         out = out.replace(m.algorithm.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'algorithm', g);
@@ -120,6 +77,7 @@ export class WordWriterID {
             return m.algorithm.render(g, entry, code);
         });
 
+        // 7. Figures, Citations, Footnotes
         out = out.replace(m.figure.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'figure', g);
@@ -149,6 +107,7 @@ export class WordWriterID {
             .map(line => {
                 const trimmed = line.trim();
                 if (!trimmed) return '';
+                // Avoid wrapping structural HTML tags in <p>
                 if (/^<(h\d|div|section|table|tbody|tr|th|td|pre|ol|ul|li|img|span|p|a|blockquote)/i.test(trimmed)) return line;
                 return `<p>${line.replace(/  /g, ' &nbsp;')}</p>`;
             })

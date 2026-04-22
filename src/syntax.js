@@ -1,6 +1,5 @@
 /**
  * WordWriterID: Syntax Specification
- * Updated with Academic Metadata Suite (Unreferenced)
  */
 export const Specification = {
     utils: { reference: "[..ID]" },
@@ -18,13 +17,7 @@ export const Specification = {
             syntax: "Authors: TITLE",
             render: (g) => `<div class="ww-main-authors">${g.title}</div>`
         },
-        // --- Inside Specification.blocks ---
         abstract: {
-            /* TRICK: We use the 'TITLE' placeholder here instead of 'CONTENT'.
-            Since 'TITLE' captures everything until the first newline [^\n]*,
-            it perfectly grabs a single-paragraph abstract without accidentally 
-            eating the rest of the document. 
-            */
             syntax: "Abstract: TITLE", 
             render: (g) => `
                 <div class="ww-abstract-container">
@@ -32,27 +25,25 @@ export const Specification = {
                     <div class="ww-abstract-content">${g.title.trim()}</div>
                 </div>`
         },
-
         blockquote: {
-            /*
-            TRICK: Using 'TITLE' here as well allows for a single-line 
-            "Blockquote: My quote" syntax. If you need multi-line blockquotes,
-            you'd have to switch this back to 'CONTENT' and ensure a double-newline terminator.
-            */
             syntax: "Blockquote: TITLE",
             render: (g) => `<blockquote class="ww-styled-blockquote">${g.title.trim()}</blockquote>`
         },
         keywords: {
             syntax: "Keywords: TITLE",
             render: (g) => {
-                // Split by comma, trim whitespace, and wrap each in a span
                 const tags = g.title.split(',')
                     .map(t => `<span class="ww-tag">${t.trim()}</span>`)
-                    .join(''); // Join with nothing, CSS will add the commas
+                    .join('');
                 return `<div class="ww-keywords-row"><strong>Keywords:</strong> ${tags}</div>`;
             }
         },
 
+        // --- REFERENCED & SPECIAL BLOCKS ---
+        inlineMath: {
+            syntax: "\\(CONTENT\\)", 
+            render: (g, e, math) => `<span class="ww-inline-math">${math}</span>`
+        },
         section: {
             syntax: "LEVEL[..ID] TITLE",
             ref: (num) => `Section ${num.join('.')}`,
@@ -125,7 +116,7 @@ class SyntaxFactory {
             .replace('LEVEL', '(?<level>#{1,3})')
             .replace('\\[\\.\\.ID\\]', '(?:\\[\\.\\.(?<id>[^\\s\\]]+)\\])?')
             .replace('\\(CONTENT\\)', '(?:\\((?<refContent>.*?)\\))?') 
-            .replace('CONTENT', '(?<content>[\\s\\S]*?)') // Changed to support newlines
+            .replace('CONTENT', '(?<content>[\\s\\S]*?)')
             .replace('TITLE', '(?<title>[^\\n]*)')
             .replace('LANG', '(?<lang>\\w+)')
             .replace('URL', '(?<url>.*?)')
@@ -134,7 +125,7 @@ class SyntaxFactory {
     }
     _build() {
         for (let key in this.spec.blocks) {
-            this.map[key] = { regex: this._generate(this.spec.blocks[key].syntax), ...this.spec.blocks[key] };
+            this.map[key] = { ...this.spec.blocks[key], regex: this._generate(this.spec.blocks[key].syntax) };
         }
         this.utils.reference = /\[\.\.(?<id>[^\]\s:]+)\]/g;
     }
