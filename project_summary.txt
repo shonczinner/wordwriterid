@@ -52,8 +52,8 @@ TODO:
 
 Theorem, Lemma, Corrollary + Optional Proof (shared counter) ```theorem title content ``` ```proof content``` etc.
 Add appendix setions (e.g. Appendix A.1/B/C) - command \appendix will change # to appendix. Footnotes and references go before appendix.
-Click on preview to move input to location
 referenced or unreferenced ordered/unordered lists/items
+Click on preview to move input to location
 Add button to copy latex, csv, and code 
 test blocks/references inside other blocks/references
 
