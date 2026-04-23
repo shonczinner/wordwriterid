@@ -45,8 +45,17 @@ export const Specification = {
                     <div class="ww-abstract-content">${g.title.trim()}</div></div>`
         },
         blockquote: {
-            syntax: "Blockquote: TITLE",
-            render: (g) => `<blockquote class="ww-styled-blockquote">${g.title.trim()}</blockquote>`
+            syntax: "```quote[..ID]TITLE\nCONTENT```",
+            render: (g, e) => {
+                const idAttr = g.id ? ` id="blockquote-${g.id}"` : '';
+                const caption = g.title ? `<cite class="ww-blockquote-caption">— ${g.title}</cite>` : '';
+                
+                // Clean the content and replace internal newlines with <br> 
+                // to prevent simpleMarkdown from splitting it into paragraphs.
+                const body = g.content.trim().split('\n').join('<br>');
+
+                return `<blockquote${idAttr} class="ww-styled-blockquote">${body}${caption}</blockquote>`;
+            }
         },
         keywords: {
             syntax: "Keywords: TITLE",
@@ -92,12 +101,15 @@ export const Specification = {
             }
         },
         algorithm: {
-            syntax: "```LANG[..ID]TITLE\nCONTENT```",
+            // We explicitly list the languages. 'code' is the generic fallback.
+            syntax: "```(?<lang>js|javascript|python|html|css|sql|bash|code)[..ID]TITLE\nCONTENT```",
             ref: (num) => `Algorithm ${num}`,
             render: (g, e, code) => {
                 const idAttr = g.id ? ` id="algorithm-${g.id}"` : '';
                 const headerLabel = e.number ? `Algorithm ${e.number}: ` : '';
-                return `<div${idAttr} class="ww-code-block"><div class="ww-code-header">${headerLabel}${g.title}</div><pre class="language-${g.lang}"><code>${code}</code></pre></div>`;
+                // Map 'code' to 'javascript' or 'none' for Prism highlighting
+                const prismLang = g.lang === 'code' ? 'javascript' : g.lang;
+                return `<div${idAttr} class="ww-code-block"><div class="ww-code-header">${headerLabel}${g.title}</div><pre class="language-${prismLang}"><code>${code}</code></pre></div>`;
             }
         },
         figure: {
@@ -142,7 +154,7 @@ class SyntaxFactory {
             .replace('\\(CONTENT\\)', '(?:\\((?<refContent>.*?)\\))?') 
             .replace('CONTENT', '(?<content>[\\s\\S]*?)')
             .replace('TITLE', '(?<title>[^\\n]*)')
-            .replace('LANG', '(?<lang>\\w+)')
+            .replace('LANG', '(?<lang>[\\w|]+)')
             .replace('URL', '(?<url><[^>]+>|[^\\s\\)]+)')
             .replace('\\n', '\\n');
 

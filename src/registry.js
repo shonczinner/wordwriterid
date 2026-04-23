@@ -13,6 +13,7 @@ export class WordWriterIDRegistry {
             table: 0, 
             figure: 0, 
             algorithm: 0,
+            blockquote: 0, // <--- ADDED THIS
             citation: 0, 
             footnote: 0, 
             list: 0
@@ -25,6 +26,7 @@ export class WordWriterIDRegistry {
         this.bibliography = [];
         this.footnotes = [];
         this.sectionHierarchy = [0, 0, 0];
+        // Resets all counters including blockquote
         Object.keys(this.counters).forEach(k => this.counters[k] = 0);
     }
 
@@ -54,6 +56,7 @@ export class WordWriterIDRegistry {
      * Registers general blocks. Returns existing entry if ID is already known.
      */
     register(id, type, metadata = {}) {
+        // Now 'blockquote' will be found in this.counters and won't fall back to 'algorithm'
         const targetType = this.counters.hasOwnProperty(type) ? type : 'algorithm';
         
         if (id && this.ids.has(id)) {

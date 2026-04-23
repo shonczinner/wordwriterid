@@ -11,14 +11,17 @@ export class WordWriterID {
         this.parser = new WordWriterIDParser(this.registry);
     }
 
-render(text) {
+    render(text) {
+        // Pass 1: Build the ID registry and number assignments
         this.parser.discover(text);
+        
+        // Pass 2: Convert structural blocks to HTML
         let html = this.renderVisualBlocks(text);
         
-        // 1. Handle Internal References ([..id])
+        // Pass 3: Replace [..id] cross-references with links
         html = this.parser.transform(html); 
         
-        // 2. Handle Unreferenced Inline Styles (Hyperlinks)
+        // Pass 4: Handle standard inline styles (Hyperlinks)
         const inline = EngineSyntax.inline;
         Object.keys(inline).forEach(key => {
             html = html.replace(inline[key].regex, (match, ...args) => {
@@ -27,8 +30,9 @@ render(text) {
             });
         });
 
-        // 3. Final cleanup and paragraph wrapping
+        // Pass 5: Paragraph wrapping and clean up
         html = this.simpleMarkdown(html);
+        
         return `<div class="wordwriter-container">${html}${this.generateEndMatter()}</div>`;
     }
 
@@ -38,8 +42,9 @@ render(text) {
         let out = text;
         const m = EngineSyntax.map;
 
-        // 1. Academic Metadata & Formatting
-        const metaTypes = ['title', 'subtitle', 'authors', 'abstract', 'keywords', 'blockquote'];
+        // 1. Academic Metadata (Title, Abstract, etc.)
+        // Note: blockquote is removed from here as it now requires registration
+        const metaTypes = ['title', 'subtitle', 'authors', 'abstract', 'keywords'];
         metaTypes.forEach(type => {
             if (m[type]) {
                 out = out.replace(m[type].regex, (match, ...args) => {
@@ -49,8 +54,16 @@ render(text) {
             }
         });
 
-        // 2. Inline Math \( ... \) 
-        // Treated as a block for discovery/logic but rendered inline
+        // 2. Blockquotes (Now handled as a numbered/ID-compatible block)
+        if (m.blockquote) {
+            out = out.replace(m.blockquote.regex, (match, ...args) => {
+                const g = args.pop();
+                const entry = this.registry.register(g.id, 'blockquote', g);
+                return m.blockquote.render(g, entry);
+            });
+        }
+
+        // 3. Inline Math \( ... \) 
         if (m.inlineMath) {
             out = out.replace(m.inlineMath.regex, (match, ...args) => {
                 const g = args.pop();
@@ -59,14 +72,14 @@ render(text) {
             });
         }
 
-        // 3. Sections
+        // 4. Sections
         out = out.replace(m.section.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.registerSection(g.id, g.level, g.title);
             return m.section.render(g, entry);
         });
 
-        // 4. Equations $$ ... $$
+        // 5. Equations $$ ... $$
         out = out.replace(m.equation.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'equation', g);
@@ -74,7 +87,7 @@ render(text) {
             return m.equation.render(g, entry, math);
         });
 
-        // 5. Tables
+        // 6. Tables (CSV to HTML)
         out = out.replace(m.table.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'table', g);
@@ -82,7 +95,7 @@ render(text) {
             return m.table.render(g, entry, this.generateTableHtml(csv));
         });
 
-        // 6. Algorithms
+        // 7. Algorithms (Code Highlighting)
         out = out.replace(m.algorithm.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'algorithm', g);
@@ -90,7 +103,7 @@ render(text) {
             return m.algorithm.render(g, entry, code);
         });
 
-        // 7. Figures, Citations, Footnotes
+        // 8. Figures, Citations, Footnotes
         out = out.replace(m.figure.regex, (match, ...args) => {
             const g = args.pop();
             const entry = this.registry.register(g.id, 'figure', g);
@@ -112,7 +125,7 @@ render(text) {
         return out;
     }
 
-    // ---------------- SIMPLE MARKDOWN ----------------
+    // ---------------- HELPERS ----------------
 
     simpleMarkdown(text) {
         let html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
