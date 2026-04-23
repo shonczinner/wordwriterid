@@ -157,9 +157,9 @@ Fix block quotes to allow multiple paragraphs
 referenced or unreferenced ordered/unordered lists/items
 Add button to copy latex, csv, and code 
 Add ability to run code
-Keep footnote numbering but make render before next header or before bibliography if none after
-Fail gracefully/test blocks/references inside other blocks/references
-
+test blocks/references inside other blocks/references
+Add referenced but not numbered (1,2,3) sections (e.g. Appendix A.1/B/C)
+Fail gracefully
 
 
     

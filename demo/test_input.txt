@@ -56,7 +56,7 @@ See [..line] below.
 y=mx+b
 \]
 
-\[\begin{cases}=a&b\\b\end{cases}\]
+\[a=\begin{cases}a,&b\\b,&a\end{cases}\]
 
 
 
@@ -65,7 +65,7 @@ Name, Height, Weight
 Alice, 5.5, 120 
 Bob, 6.0, 130
 ```
-##[..hi2] asdasd
+##[..hi2] A subsection
 
 
 
@@ -102,6 +102,3 @@ According to the research in @[..relativity](Einstein, A. (1915). The General Th
 
 
 Check the bottom of the page for the full list!
-
-
-
